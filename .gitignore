@@ -1,0 +1,30 @@
+/vendor/
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Composer
+composer.lock
+
+# PHPUnit
+.phpunit.result.cache
+phpunit.xml
+
+# Pest
+.pest/
+
+# Coverage
+coverage/
+clover.xml
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Env
+.env
+.env.testing
+.env.example
