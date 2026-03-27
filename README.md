@@ -9,7 +9,7 @@ A Laravel package for seamless integration with [WAHA (WhatsApp HTTP API)](https
 ## Requirements
 
 - PHP 8.3+
-- Laravel 13.x
+- Laravel 11.x or above
 - A running [WAHA](https://github.com/devlikeapro/waha) instance
 
 ## Installation
