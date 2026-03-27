@@ -2,6 +2,8 @@
 
 namespace LaravelWaha\WahaMessages\Resources;
 
+use LaravelWaha\WahaMessages\Exceptions\WahaException;
+
 class SessionResource extends BaseResource
 {
     /**
@@ -105,12 +107,31 @@ class SessionResource extends BaseResource
     /**
      * Get the QR code for session authentication.
      *
-     * @return array<string, mixed>
+     * @param  string  $format  'raw', 'base64', or 'binary'
+     * @return array<string, mixed>|string
      */
-    public function qr(string $session): array
+    public function qr(string $session, string $format = 'raw'): array|string
     {
+        $http = clone $this->http;
+
+        if ($format === 'base64') {
+            return $this->handleResponse(
+                $http->acceptJson()->get("/api/{$session}/auth/qr", ['format' => 'image'])
+            );
+        }
+
+        if ($format === 'binary') {
+            $response = $http->accept('image/png')->get("/api/{$session}/auth/qr", ['format' => 'image']);
+
+            if ($response->failed()) {
+                throw WahaException::fromResponse($response);
+            }
+
+            return $response->body();
+        }
+
         return $this->handleResponse(
-            $this->http->get("/api/{$session}/auth/qr")
+            $http->get("/api/{$session}/auth/qr", ['format' => 'raw'])
         );
     }
 
